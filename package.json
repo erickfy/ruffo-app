@@ -14,9 +14,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright test e2e/auth.spec.ts e2e/clients.spec.ts e2e/protected.spec.ts",
-    "test:e2e:pet": "playwright test e2e/pet-submit.spec.ts",
-    "test:e2e:all": "playwright test"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

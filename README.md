@@ -2,6 +2,18 @@
 
 Aplicación desarrollada con **Next.js (App Router)**, **TypeScript**, **Supabase** y **shadcn/ui** para simular un mini-módulo funcional de gestión de clientes y mascotas para una plataforma SaaS de peluquerías caninas.
 
+![Landing](./public/readme/landing.png)
+
+- **Repositorio:** [ruffo-app](https://github.com/erickfy/ruffo-app)
+- **Deploy :** [ruffo-app-one.vercel.app](https://ruffo-app-one.vercel.app/)
+- **Usuarios de prueba:**
+  - `tester@example.com`
+    - `SecureFlame17`
+  - `aguilakrakatoa@gmail.com`
+    - `Bmxextremo17.`
+
+---
+
 ## Objetivo
 
 Construir un módulo funcional que permita:
@@ -23,58 +35,6 @@ Construir un módulo funcional que permita:
 - **@supabase/ssr**
 - **shadcn/ui**
 - **Tailwind CSS**
-
----
-
-## Funcionalidades implementadas
-
-### RF-01: Autenticación
-
-- Login con email y contraseña usando Supabase Auth
-- Protección de rutas privadas
-- Redirección a `/login` si no existe sesión
-- Cierre de sesión
-
-### RF-02: Listado de clientes
-
-- Ruta `/clientes`
-- Tabla con:
-  - nombre completo
-  - teléfono
-  - cantidad de mascotas
-  - fecha de registro
-- Buscador de clientes
-- Paginación en cliente
-- Botón para registrar nuevo cliente
-
-### RF-03: Registro de cliente
-
-- Ruta `/clientes/nuevo`
-- Formulario con:
-  - nombre completo
-  - teléfono
-  - email
-  - notas
-- Validación básica de campos obligatorios
-- Redirección al detalle del cliente creado
-
-### RF-04: Detalle del cliente
-
-- Ruta `/clientes/[id]`
-- Visualización de datos del cliente
-- Visualización de mascotas asociadas
-- Acceso al formulario de nueva mascota
-
-### RF-05: Registro de mascota
-
-- Ruta `/clientes/[id]/mascotas/nuevo`
-- Formulario con:
-  - nombre
-  - especie
-  - raza
-  - notas de comportamiento
-- Asociación directa con el cliente
-- Redirección al detalle del cliente
 
 ---
 
@@ -124,13 +84,10 @@ Este proyecto utiliza las siguientes variables:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
-```
 
-### `.env.example`
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+<!-- Para e2e -->
+E2E_LOGIN_EMAIL=tester@example.com
+E2E_LOGIN_PASSWORD=SecureFlame17
 ```
 
 ---
@@ -141,6 +98,8 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 
 Crear un proyecto desde el dashboard de Supabase.
 
+![Crear proyecto en Supabase](./public/readme/supabase/create-proj.png)
+
 ### 2. Obtener credenciales
 
 Desde **Connect** o **Settings > API**, copiar:
@@ -150,9 +109,13 @@ Desde **Connect** o **Settings > API**, copiar:
 
 Y pegarlas en `.env.local`.
 
+![Obtener credenciales](./public/readme/supabase/get-credentials.png)
+
 ### 3. Crear usuario de prueba
 
 Desde **Authentication > Users**, crear manualmente un usuario de prueba con email y contraseña.
+
+![Crear usuario de prueba](./public/readme/supabase/create-user.png)
 
 ---
 
@@ -314,9 +277,10 @@ Se utilizaron:
 
 Los tests unitarios cubren los siguientes componentes:
 
-- `components/auth/login-form.tsx`
-- `components/clients/client-form.tsx`
-- `components/pets/pet-form.tsx`
+- `components/pets/delete-pet-button.test.tsx`
+- `components/pets/pet-form.test.tsx`
+- `components/clients/client-form.test.tsx`
+- `components/auth/login-form.test.tsx`
 
 Escenarios cubiertos:
 
@@ -340,19 +304,29 @@ pnpm test:coverage
 
 Resultado actual de cobertura:
 
-- **Statements:** 92%
-- **Branches:** 75%
-- **Functions:** 66.66%
-- **Lines:** 95.83%
+- **Statements:** 100%
+- **Branches:** 100%
+- **Functions:** 100%
+- **Lines:** 100%
+
+![Cobertura de tests unitarios](./public/readme/tests/coverage.png)
 
 ### Tests E2E
 
 Se implementaron pruebas end-to-end con **Playwright** para validar los flujos reales de la aplicación:
 
-- autenticación completa (login, logout, credenciales inválidas)
+- autenticación completa (login, logout, credenciales inválidas, formularios)
 - protección de rutas y redirecciones
 - creación de clientes
 - registro de mascotas asociadas a clientes
+- eliminación de mascotas
+
+Para usar los tests E2E, debes agregar las siguientes variables de entorno:
+
+```env
+E2E_LOGIN_EMAIL=tester@example.com
+E2E_LOGIN_PASSWORD=SecureFlame17
+```
 
 Para ejecutar los tests E2E:
 
@@ -360,12 +334,14 @@ Para ejecutar los tests E2E:
 pnpm test:e2e
 ```
 
+![Resultado de tests E2E](./public/readme/tests/e2e.png)
+
 ### Resultado actual
 
 Estado actual de pruebas:
 
-- **Unit tests:** 7/7 passing
-- **E2E tests:** 8/8 passing
+- **Unit tests:** 24/24 passing
+- **E2E tests:** 12/12 passing
 
 ### Nota técnica
 
@@ -376,30 +352,15 @@ Se eligió combinar:
 
 Esto resulta especialmente útil en Next.js con Server Components, donde el comportamiento completo de navegación y sesión se valida mejor mediante pruebas end-to-end.
 
+## Modelos IA utilizados
+
+- **Chat:** OpenAI GPT-5.2
+- **Gemini:** Google Gemini 3.1
+
 ## Qué mejoraría con más tiempo
 
-- edición y eliminación de clientes y mascotas
+- edición de clientes y mascotas
 - paginación y búsqueda directamente desde Supabase
-- feedback visual con toasts
-- confirmaciones para acciones sensibles
+- internacionalización i18n
 - mejores estados de carga y skeletons
 - filtros adicionales por fecha o cantidad de mascotas
-
----
-
-## Deploy
-
-- **Repositorio:** `https://github.com/erickfy/ruffo-app`
-- **Deploy en Vercel:** `https://ruffo-app-erickfys-projects.vercel.app/`
-
----
-
-## Capturas sugeridas
-
-Se pueden incluir capturas de:
-
-1. Login
-2. Listado de clientes
-3. Detalle de cliente
-4. Formulario de nuevo cliente
-5. Formulario de nueva mascota

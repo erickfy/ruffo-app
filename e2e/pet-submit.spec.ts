@@ -84,5 +84,7 @@ test("permite registrar una mascota asociada a un cliente", async ({
     timeout: 15000,
   });
 
-  await expect(page.getByText(pet.name)).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: pet.name, exact: true }),
+  ).toBeVisible();
 });

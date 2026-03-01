@@ -12,6 +12,7 @@ import {
 import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { Badge } from "@/components/ui/badge";
+import { DeletePetButton } from "@/components/pets/delete-pet-button";
 
 type Client = {
   id: string;
@@ -328,6 +329,9 @@ export default async function ClienteDetallePage({
                           )}
                         </p>
                       </div>
+                    </div>
+                    <div className="flex justify-end">
+                      <DeletePetButton petId={pet.id} petName={pet.name} />
                     </div>
                   </div>
                 ))}

@@ -20,7 +20,7 @@ export function LogoutButton() {
       description: "Estamos saliendo de Ruffo App.",
     });
 
-    const { error } = await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut({ scope: "local" });
 
     setIsLoading(false);
 
